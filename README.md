@@ -35,3 +35,7 @@ To **build** for production run:
 npm run build
 ```
 which will generate the necessary files for the control panel into the `./build` folder.
+
+---
+## License
+This project is released under the MIT license; see `LICENSE` for more information. Some dependencies are bundled within this repository, but are under terms of separate licenses.
