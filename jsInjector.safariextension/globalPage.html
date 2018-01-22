@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<script>
+
+function performCommand(event) {
+  if (event.command === "show_settings") {
+    var newTab = safari.application.activeBrowserWindow.openTab();
+    newTab.url = safari.extension.baseURI + "settings/index.html";
+  }
+}
+
+function getTask(pageData, event) {
+
+  var rules = safari.extension.settings.rules || [];
+  var href = pageData.location.href
+
+  for (var i = 0; i < rules.length; i++) {
+    var rule = rules[i];
+    if (rule.enabled) {
+      if ((rule.match === "exact" && rule.trigger === href) ||
+          (rule.match === "prefix" && href.startsWith(rule.trigger)) ||
+          (rule.match === "contained" && href.includes(rule.trigger))) {
+        event.target.page.dispatchMessage("receivedTask", rule.injection);
+      }
+    }
+  }
+
+  /*
+  if (pageData.location.href === "https://www.kth.se/student/minasidor/kurser/?l=en_UK") {
+    event.target.page.dispatchMessage("receivedTask", inj);
+  }
+  */
+}
+
+function respondToMessage(event) {
+  
+  if (event.name === "getTask") {
+    var pageData = JSON.parse(event.message);
+    getTask(pageData, event);
+  
+  } else if (event.name === "saveRules") {
+    var rules = JSON.parse(event.message);
+    safari.extension.settings.rules = rules;
+    event.target.page.dispatchMessage("savedRules", null);
+
+  } else if (event.name === "getRules") {
+    var rules = safari.extension.settings.rules || [];
+    event.target.page.dispatchMessage("receivedRules", JSON.stringify(rules));
+  }
+}
+
+safari.application.addEventListener("command", performCommand, false);
+safari.application.addEventListener("message", respondToMessage, false);
+
+</script>

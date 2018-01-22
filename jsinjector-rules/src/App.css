@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+  background-color: #BED9E2;
+  padding-bottom: 10px;
+}
+
+body {
+  background-color: #BED9E2;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.ace_text-input {
+  position: absolute!important
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  color:    #BED9E2;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color:    #BED9E2;
+  opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:    #BED9E2;
+  opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color:    #BED9E2;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

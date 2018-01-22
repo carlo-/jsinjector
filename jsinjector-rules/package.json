@@ -1,0 +1,39 @@
+{
+  "name": "jsinjector-rules",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "radium": "^0.18.2",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-dynamic-modal": "^1.1.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-syntax-decorators": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-env": "^1.2.2",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-preset-stage-1": "^6.22.0",
+    "babel-preset-stage-3": "^6.22.0",
+    "eslint": "^3.19.0",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-react": "^6.10.3",
+    "react-scripts": "0.9.5",
+    "lodash": "latest"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && python3 postbuild.py",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "babel-version": "babel --version"
+  }
+}

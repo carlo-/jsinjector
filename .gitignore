@@ -1,0 +1,15 @@
+# Generic
+build/
+*.swp
+.DS_Store
+.directory
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Webstorm
+**/.idea
+
+# Dependencies
+**/node_modules
