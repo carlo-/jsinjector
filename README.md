@@ -13,7 +13,7 @@ The rules can be set up through a control panel and are based on URLs.
 
 ---
 ## Installation
-x
+Download the latest version from [here](https://github.com/carlo-/jsinjector/releases) and open it with Safari to install.
 
 ---
 ## Setup for development
