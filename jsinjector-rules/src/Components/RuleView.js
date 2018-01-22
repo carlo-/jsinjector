@@ -1,5 +1,9 @@
 /**
- * Created by carlo on 27/03/2017.
+ * RuleView.js
+ *
+ * Created by carlo- on 27/03/2017.
+ * Copyright © 2018 Carlo Rapisarda. All rights reserved.
+ *
  */
 
 import React, {Component} from "react";
@@ -7,6 +11,16 @@ const ace = window.ace;
 
 
 const styles = {
+    ruleView: {
+        backgroundColor: "#BED9E2",
+        height: 300,
+        flexDirection: "column",
+        margin: 15,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 4,
+    },
     matchOptionsContainer: {
         display: "flex",
         flexDirection: "row",
@@ -18,7 +32,6 @@ const styles = {
         width: 230,
     },
     matchOption: {
-        //backgroundColor: "#f00",
         fontSize: 13,
         fontWeight: 700,
     },
@@ -27,7 +40,44 @@ const styles = {
         fontSize: 13,
         fontWeight: 700,
     },
+    ruleBar: {
+        height: 50,
+        width: "98%",
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
+    removeButton: {
+        backgroundColor: "rgb(196, 67, 43)",
+        border: "none",
+        height: 30,
+        color: "#BED9E2",
+        cursor: "pointer",
+        borderRadius: 4,
+        margin: 0,
+    },
+    enableButton: (enabled) => ({
+        backgroundColor: (enabled ? "rgb(196, 67, 43)" : "rgb(113, 196, 104)"),
+        border: "none",
+        height: 30,
+        color: "#BED9E2",
+        cursor: "pointer",
+        borderRadius: 4,
+        margin: 0,
+    }),
+    triggerField: {
+        width: 350,
+        height: 27,
+        borderRadius: 4,
+        border: "none",
+        padding: "0 10",
+        color: "#000000",
+        backgroundColor: "#eeeeee",
+        margin: 0,
+    },
 };
+
 
 class RuleBar extends Component {
 
@@ -36,9 +86,7 @@ class RuleBar extends Component {
         const {initialRule} = props;
         this.getRule = this.getRule.bind(this);
         this.onMatchOptionChanged = this.onMatchOptionChanged.bind(this);
-        this.state = {
-            rule: initialRule,
-        };
+        this.state = {rule: initialRule};
     }
 
     getRule() {
@@ -57,44 +105,17 @@ class RuleBar extends Component {
         const {removeHandler} = this.props;
         const {rule} = this.state;
         const formID = "match-"+rule.id;
-        const disableColor = "rgb(196, 67, 43)";
-        const enableColor = "rgb(113, 196, 104)";
         return (
-          <div
-            style={{
-                height: 50,
-                width: "98%",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-            }}
-          >
+          <div style={styles.ruleBar}>
             <button
               onClick={() => removeHandler(rule.id)}
-              style={{
-                      backgroundColor: disableColor,
-                      border: "none",
-                      height: 30,
-                      color: "#BED9E2",
-                      cursor: "pointer",
-                      borderRadius: 4,
-                  margin: 0,
-                  }}
+              style={styles.removeButton}
             >
                 Remove
             </button>
             <button
               onClick={() => this.setState({rule: {...rule, enabled: !rule.enabled}})}
-              style={{
-                      backgroundColor: (rule.enabled ? disableColor : enableColor),
-                      border: "none",
-                      height: 30,
-                      color: "#BED9E2",
-                      cursor: "pointer",
-                      borderRadius: 4,
-                    margin: 0,
-                }}
+              style={styles.enableButton(rule.enabled)}
             >
               {rule.enabled ? "Disable" : "Enable"}
             </button>
@@ -103,16 +124,7 @@ class RuleBar extends Component {
               placeholder="Trigger URL"
               value={rule.trigger}
               onChange={(e) => this.setState({rule: {...rule, trigger: e.target.value}})}
-              style={{
-                  width: 350,
-                  height: 27,
-                  borderRadius: 4,
-                  border: "none",
-                  padding: "0 10",
-                  color: "#000000",
-                  backgroundColor: "#eeeeee",
-                  margin: 0,
-              }}
+              style={styles.triggerField}
             />
             <div style={styles.matchOptionsContainer}>
               <p style={styles.matchOption}>
@@ -184,35 +196,19 @@ class RuleView extends Component {
     getRule() {
         const injection = this.editor.getValue();
         const rule = this.ruleBar.getRule();
-        return {
-            ...rule,
-            injection,
-        };
+        return {...rule, injection};
     }
 
     render() {
-        const {props, editorID} = this;
-        const {initialRule, removeHandler} = props;
-
+        const {initialRule, removeHandler} = this.props;
         return (
-          <div
-            style={{
-                backgroundColor: "#BED9E2",
-                height: 300,
-                flexDirection: "column",
-                margin: 15,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 4,
-            }}
-          >
+          <div style={styles.ruleView}>
             <RuleBar
               initialRule={initialRule}
               removeHandler={removeHandler}
               ref={(r) => this.ruleBar = r}
             />
-            <div id={editorID} style={{width: "100%", height: "100%"}}>.</div>
+            <div id={this.editorID} style={{width: "100%", height: "100%"}}>.</div>
           </div>
         );
     }

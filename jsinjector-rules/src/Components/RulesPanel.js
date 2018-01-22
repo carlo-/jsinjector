@@ -1,12 +1,20 @@
 /**
- * Created by carlo on 27/03/2017.
+ * RulesPanel.js
+ *
+ * Created by carlo- on 27/03/2017.
+ * Copyright © 2018 Carlo Rapisarda. All rights reserved.
+ *
  */
 
-//noinspection JSUnresolvedVariable
 import React, {Component} from "react";
 import RuleView from "./RuleView";
 
+
 const styles = {
+    container: {
+        width: 775,
+        marginTop: 15,
+    },
     largeAddButton: {
         height: 30,
         marginBottom: 15,
@@ -18,47 +26,15 @@ const styles = {
         textDecoration: "none",
         cursor: "pointer",
     },
-    smallAddButton: {
-        height: 30,
-        width: 65,
-        marginLeft: 30,
-        borderRadius: 4,
-        backgroundColor: "#658E9C",
-        border: "none",
+    noRules: {
         color: "#BED9E2",
-        textDecoration: "none",
-        cursor: "pointer",
     },
-    cancelButton: {
-        height: 30,
-        width: 65,
-        borderRadius: 4,
+    rulesContainer: {
         backgroundColor: "#658E9C",
-        border: "none",
-        color: "#BED9E2",
-        textDecoration: "none",
-        cursor: "pointer",
-    },
-    genericField: {
-        height: 40,
-        borderRadius: 4,
-        marginBottom: 5,
-        padding: "0 10px",
-        border: "none",
-        color: "#000000",
-        backgroundColor: "#eeeeee",
-    },
-    container: {
-        backgroundColor: "#658E9C",
-        height: 360,
-        marginTop: 15,
         borderColor: "#658E9C",
         borderStyle: "solid",
         borderWidth: 15,
         borderRadius: 4,
-    },
-    noRules: {
-        color: "#BED9E2",
     },
 };
 
@@ -67,6 +43,7 @@ class RulesPanel extends Component {
 
     constructor(props) {
         super(props);
+        this.cellsRefs = [];
         this.getRules = this.getRules.bind(this);
     }
 
@@ -88,32 +65,24 @@ class RulesPanel extends Component {
         ));
 
         return (
-          <div style={{width: 775, marginTop: 15}}>
+          <div style={styles.container}>
 
             <div>
               <button onClick={props.onAdd} style={styles.largeAddButton}>
-                      Add new rule
-                  </button>
+                  Add new rule
+              </button>
               <button onClick={props.onSave} style={styles.largeAddButton}>
-                      Save rules
-                  </button>
+                  Save rules
+              </button>
               <button onClick={props.onImport} style={styles.largeAddButton}>
-                      Import rules
-                  </button>
+                  Import rules
+              </button>
               <button onClick={props.onExport} style={styles.largeAddButton}>
-                      Export rules
-                  </button>
+                  Export rules
+              </button>
             </div>
 
-            <div
-              style={{
-                  backgroundColor: "#658E9C",
-                  borderColor: "#658E9C",
-                  borderStyle: "solid",
-                  borderWidth: 15,
-                  borderRadius: 4,
-              }}
-            >
+            <div style={styles.rulesContainer}>
               {(cells.length > 0) ? (
                 cells
               ) : (
@@ -128,11 +97,10 @@ class RulesPanel extends Component {
 RulesPanel.propTypes = {
     initialRules: React.PropTypes.array.isRequired,
     onAdd: React.PropTypes.func.isRequired,
-    onSave: React.PropTypes.func.isRequired,
-    onRemove: React.PropTypes.func.isRequired,
-    onImport: React.PropTypes.func.isRequired,
     onExport: React.PropTypes.func.isRequired,
+    onImport: React.PropTypes.func.isRequired,
+    onRemove: React.PropTypes.func.isRequired,
+    onSave: React.PropTypes.func.isRequired,
 };
-
 
 export default RulesPanel;

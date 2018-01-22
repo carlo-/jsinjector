@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <script>
+/**
+ * globalPage.html
+ *
+ * Created by carlo- on 21/01/2018.
+ * Copyright © 2018 Carlo Rapisarda. All rights reserved.
+ *
+ */
 
 function performCommand(event) {
   if (event.command === "show_settings") {
@@ -23,12 +30,6 @@ function getTask(pageData, event) {
       }
     }
   }
-
-  /*
-  if (pageData.location.href === "https://www.kth.se/student/minasidor/kurser/?l=en_UK") {
-    event.target.page.dispatchMessage("receivedTask", inj);
-  }
-  */
 }
 
 function respondToMessage(event) {

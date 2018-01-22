@@ -1,9 +1,16 @@
 /**
- * Created by carlo on 05/04/2017.
+ * AlertModal.js
+ *
+ * Created by carlo- on 05/04/2017.
+ * Copyright © 2018 Carlo Rapisarda. All rights reserved.
+ *
  */
 
 import React,{Component} from "react";
+
+//noinspection JSUnresolvedVariable
 import {Modal, Effect} from "react-dynamic-modal";
+
 
 const styles = {
     modal: {
@@ -21,6 +28,7 @@ const styles = {
         marginLeft: 15,
     },
 };
+
 
 class AlertModal extends Component{
     render(){

@@ -1,47 +1,21 @@
-/* global process */
-//noinspection JSUnresolvedVariable
+/**
+ * App.js
+ *
+ * Created by carlo- on 21/01/2018.
+ * Copyright © 2018 Carlo Rapisarda. All rights reserved.
+ *
+ */
+
 import React, {Component} from "react";
-import {ModalManager} from "react-dynamic-modal";
-import _ from "lodash";
-const safari = window.safari;
 
 //noinspection JSUnresolvedVariable
-//import logo from "./logo.svg";
-import "./App.css";
-
+import {ModalManager} from "react-dynamic-modal";
 import AlertModal from "./Components/AlertModal";
 import RulesPanel from "./Components/RulesPanel";
 
-const isDevBuild = () => (
-    (!process.env.NODE_ENV || process.env.NODE_ENV === "development")
-);
+import "./App.css";
+import * as util from "./Utilities";
 
-const triggerFileDownload = (filename, rawText) => {
-    const element = document.createElement("a");
-    element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(rawText));
-    element.setAttribute("download", filename);
-    element.style.display = "none";
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-};
-
-// TODO: Improve checks
-const isValidRules = (rules) => (
-    rules &&
-    (typeof rules === "object")
-);
-
-const newRule = () => {
-    const id = _.random(0,100000000000000000) + "";
-    return {
-        enabled: true,
-        match: "exact",
-        trigger: "",
-        injection: "// Rule ID: "+id+"\n// Code to be injected here...",
-        id,
-    };
-};
 
 class App extends Component {
 
@@ -58,8 +32,8 @@ class App extends Component {
 
         this.setupRulesImport();
 
-        if (!isDevBuild()) {
-            safari.self.addEventListener("message", this.getAnswer, false);
+        if (!util.isDevBuild()) {
+            util.safari.self.addEventListener("message", this.getAnswer, false);
         }
     }
 
@@ -80,7 +54,7 @@ class App extends Component {
             reader.onload = (e) => {
                 try {
                     const importedRules = JSON.parse(e.target.result);
-                    if (isValidRules(importedRules)) {
+                    if (util.isValidRules(importedRules)) {
                         this.setState({rules: importedRules});
                     } else {
                         invalidRules();
@@ -96,25 +70,25 @@ class App extends Component {
     getAnswer(event) {
         if (event.name === "receivedRules" && event.message) {
             let rules = JSON.parse(event.message) || [];
-            console.log("receivedRules", rules);
+            util.log("receivedRules", rules);
 
             if (rules.length === 0) {
-                rules = [newRule()];
+                rules = [util.newRule()];
             }
 
             this.setState({rules});
 
         } else if (event.name === "savedRules") {
-            console.log("savedRules");
+            util.log("savedRules");
             this.closeModal();
         }
     }
 
     loadRules() {
-        if (!isDevBuild()) {
-            safari.self.tab.dispatchMessage("getRules", null);
+        if (!util.isDevBuild()) {
+            util.safari.self.tab.dispatchMessage("getRules", null);
         } else {
-            this.setState({rules: [newRule()]});
+            this.setState({rules: [util.newRule()]});
         }
     }
 
@@ -176,7 +150,7 @@ class App extends Component {
         const rules = this.rulesPanel.getRules();
         this.setState({rules});
         const rulesString = JSON.stringify(rules);
-        triggerFileDownload("jsInjectorRules.json", rulesString);
+        util.triggerFileDownload("jsInjectorRules.json", rulesString);
     }
 
     handleSaveRules() {
@@ -186,11 +160,13 @@ class App extends Component {
             title: "Saving...", subtitle: null, dismissable: false,
         });
         setTimeout(() => {
-            if (!isDevBuild()) {
-                safari.self.tab.dispatchMessage("saveRules", JSON.stringify(rules));
+            if (!util.isDevBuild()) {
+                util.safari.self.tab.dispatchMessage("saveRules", JSON.stringify(rules));
+            } else {
+                this.closeModal();
             }
-        }, 1000);
-        console.log("saveRules");
+        }, 700);
+        util.log("saveRules");
     }
 
     handleRemoveRule(ruleID) {
@@ -204,10 +180,7 @@ class App extends Component {
     handleAddRule() {
         const rules = this.rulesPanel.getRules();
         this.setState({
-            rules: [
-                newRule(),
-                ...rules,
-            ],
+            rules: [util.newRule(), ...rules],
         });
     }
 }

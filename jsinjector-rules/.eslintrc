@@ -72,13 +72,6 @@
       "error",
       "multiline"
     ],
-    "react/jsx-handler-names": [
-      "error",
-      {
-        "eventHandlerPrefix": "on",
-        "eventHandlerPropPrefix": "on"
-      }
-    ],
     "react/jsx-key": "error",
     "react/jsx-no-duplicate-props": "error",
     "react/jsx-uses-react": "error",
