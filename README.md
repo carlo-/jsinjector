@@ -17,7 +17,7 @@ Download the latest version from [here](https://github.com/carlo-/jsinjector/rel
 
 ---
 ## Setup for development
-The control panel is built with ReactJS and npm is required for the development.
+The control panel is built with ReactJS, and npm is required for the development.
 
 In order to **install** all of the necessary dependencies run:
 ```bash
@@ -34,7 +34,7 @@ To **build** for production run:
 ```bash
 npm run build
 ```
-which will generate the necessary files for the control panel into the `./build` folder.
+which will generate the necessary files for the control panel into the `./build` folder and into the `jsInjector.safariextension` container.
 
 ---
 ## License
