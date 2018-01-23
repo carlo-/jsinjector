@@ -39,3 +39,11 @@ which will generate the necessary files for the control panel into the `./build`
 ---
 ## License
 This project is released under the MIT license; see `LICENSE` for more information. Some dependencies are bundled within this repository, but are under terms of separate licenses.
+
+---
+## Acknowledgements
+Portions of this project utilize the following copyrighted material, the use of which is hereby acknowledged:
+* [Ace](https://github.com/ajaxorg/ace) by [Cloud9](https://c9.io) and [Mozilla](https://www.mozilla.org)
+* Icon by [Freepik](http://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com)
+
+
