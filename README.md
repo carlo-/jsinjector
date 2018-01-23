@@ -1,5 +1,5 @@
 # jsInjector
-##### v0.1 alpha
+##### v0.2 alpha
 ![Platforms](https://img.shields.io/badge/platform-Safari-lightgrey.svg) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
 jsInjector is a Safari extension that allows users to inject arbitrary JS into specific web pages.\
