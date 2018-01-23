@@ -1,6 +1,6 @@
 {
   "name": "jsinjector-rules",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.4",

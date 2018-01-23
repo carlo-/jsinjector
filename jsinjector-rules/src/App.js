@@ -7,6 +7,7 @@
  */
 
 import React, {Component} from "react";
+import _ from "lodash";
 
 //noinspection JSUnresolvedVariable
 import {ModalManager} from "react-dynamic-modal";
@@ -21,7 +22,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {rules: []};
+        this.state = {rules: [], savedRules: []};
         this.handleRemoveRule = this.handleRemoveRule.bind(this);
         this.handleAddRule = this.handleAddRule.bind(this);
         this.handleSaveRules = this.handleSaveRules.bind(this);
@@ -29,12 +30,25 @@ class App extends Component {
         this.handleExportRules = this.handleExportRules.bind(this);
         this.getAnswer = this.getAnswer.bind(this);
         this.setupRulesImport = this.setupRulesImport.bind(this);
+        this.setupRulesMonitor = this.setupRulesMonitor.bind(this);
 
         this.setupRulesImport();
+        this.setupRulesMonitor();
 
         if (!util.isDevBuild()) {
             util.safari.self.addEventListener("message", this.getAnswer, false);
         }
+    }
+
+    setupRulesMonitor() {
+        setInterval(() => {
+            if (this.rulesPanel) {
+                const currentRules = this.rulesPanel.getRules();
+                const {savedRules} = this.state;
+                const changed = !(_.isEqual(currentRules, savedRules));
+                this.rulesPanel.rulesChanged(changed);
+            }
+        }, 800);
     }
 
     setupRulesImport() {
@@ -76,11 +90,12 @@ class App extends Component {
                 rules = [util.newRule()];
             }
 
-            this.setState({rules});
+            this.setState({rules, savedRules: rules});
 
         } else if (event.name === "savedRules") {
             util.log("savedRules");
             this.closeModal();
+            this.setState({savedRules: this.state.rules});
         }
     }
 
@@ -88,7 +103,8 @@ class App extends Component {
         if (!util.isDevBuild()) {
             util.safari.self.tab.dispatchMessage("getRules", null);
         } else {
-            this.setState({rules: [util.newRule()]});
+            // Simulate answer from extension
+            this.getAnswer({name: "receivedRules", message: "[]"});
         }
     }
 
@@ -133,7 +149,10 @@ class App extends Component {
 
             <div className="App-header">
               <img src={"logo.svg"} className="App-logo" alt="logo"/>
-              <h2>jsInjector rules</h2>
+              <h2>jsInjector</h2>
+              <h5 style={{marginTop: -10}}>
+                {util.VERSION} | <a href={util.GITHUB_PAGE} target="_blank">about</a>
+              </h5>
             </div>
 
             {this._renderContent()}
@@ -148,6 +167,10 @@ class App extends Component {
 
     handleExportRules() {
         const rules = this.rulesPanel.getRules();
+        if (!util.isValidRules(rules)) {
+            alert("One or more rules are not valid!");
+            return;
+        }
         this.setState({rules});
         const rulesString = JSON.stringify(rules);
         util.triggerFileDownload("jsInjectorRules.json", rulesString);
@@ -155,6 +178,10 @@ class App extends Component {
 
     handleSaveRules() {
         const rules = this.rulesPanel.getRules();
+        if (!util.isValidRules(rules)) {
+            alert("One or more rules are not valid!");
+            return;
+        }
         this.setState({rules});
         this.openModal({
             title: "Saving...", subtitle: null, dismissable: false,
@@ -163,7 +190,8 @@ class App extends Component {
             if (!util.isDevBuild()) {
                 util.safari.self.tab.dispatchMessage("saveRules", JSON.stringify(rules));
             } else {
-                this.closeModal();
+                // Simulate answer from extension
+                this.getAnswer({name: "savedRules", message: null});
             }
         }, 700);
         util.log("saveRules");

@@ -45,10 +45,19 @@ class RulesPanel extends Component {
         super(props);
         this.cellsRefs = [];
         this.getRules = this.getRules.bind(this);
+        this.rulesChanged = this.rulesChanged.bind(this);
     }
 
     getRules() {
         return this.cellsRefs.map((cell) => cell.getRule());
+    }
+
+    rulesChanged(changed) {
+        if (this.saveButton) {
+            this.saveButton.style.setProperty("background-color", (
+                changed ? "rgb(113, 196, 104)" : styles.largeAddButton.backgroundColor
+            ));
+        }
     }
 
     render() {
@@ -71,7 +80,7 @@ class RulesPanel extends Component {
               <button onClick={props.onAdd} style={styles.largeAddButton}>
                   Add new rule
               </button>
-              <button onClick={props.onSave} style={styles.largeAddButton}>
+              <button onClick={props.onSave} style={styles.largeAddButton} ref={(r) => this.saveButton = r}>
                   Save rules
               </button>
               <button onClick={props.onImport} style={styles.largeAddButton}>

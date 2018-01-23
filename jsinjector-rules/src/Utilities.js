@@ -11,6 +11,8 @@ import _ from "lodash";
 
 /**** Constants ****/
 export const DEBUG_LOG = true;
+export const GITHUB_PAGE = "https://github.com/carlo-/jsinjector";
+export const VERSION = "v0.2-alpha";
 /**** ********* ****/
 
 export const safari = window.safari;
@@ -37,7 +39,8 @@ export const isValidRule = (rule) => (
     (typeof rule["trigger"] === "string") &&
     (typeof rule["injection"] === "string") &&
     (typeof rule["id"] === "string") &&
-    (rule["match"] === "exact" || rule["match"] === "prefix" || rule["match"] === "contained")
+    (rule["match"] === "exact" || rule["match"] === "prefix" || rule["match"] === "contained") &&
+    (rule["trigger"].length > 0)
 );
 
 export const isValidRules = (rules) => (

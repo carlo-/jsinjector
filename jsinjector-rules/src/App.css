@@ -8,8 +8,8 @@
 
 .App {
   text-align: center;
-  background-color: #BED9E2;
   padding-bottom: 10px;
+  flex: 1;
 }
 
 body {
@@ -17,6 +17,22 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+footer {
+  width: 100%;
+  font-size: 10px;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+a {
+  color: #fff;
 }
 
 .App-logo {
