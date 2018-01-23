@@ -16,6 +16,10 @@ The rules can be set up through a control panel and are based on URLs.
 Download the latest version from [here](https://github.com/carlo-/jsinjector/releases) and open it with Safari to install.
 
 ---
+## Contributing
+Contributions of any kind are more than welcome! Feel free to fork and improve jsInjector in any way you want, make a pull request, or open an issue.
+
+---
 ## Setup for development
 The control panel is built with ReactJS, and npm is required for the development.
 
