@@ -8,6 +8,16 @@
 
 import os
 
+# Check build folder
+if os.system("ls ./build/index.html > /dev/null 2>&1") != 0:
+	print("Build files not found!")
+	exit(1)
+
+# Check extension folder
+if os.system("ls ../jsInjector.safariextension/settings > /dev/null 2>&1") != 0:
+	print("Safari extension container corrupted or not found!")
+	exit(2)
+
 raw_html = ""
 
 # Read original HTML file
@@ -21,7 +31,8 @@ raw_html = raw_html.replace("/static","static").replace("/favicon","favicon")
 with open('build/index.html','w') as fout:
 	fout.write(raw_html)
 
-# Copy the build into the .safariextension container
-os.system("cp -r ./build/* ../jsInjector.safariextension/settings/.")
+# Remove old files and copy the build into the .safariextension container
+os.system("rm -r ../jsInjector.safariextension/settings/* > /dev/null 2>&1")
+os.system("cp -r ./build/* ../jsInjector.safariextension/settings/. > /dev/null 2>&1")
 
 print("Post-build script done")
