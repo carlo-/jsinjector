@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1</string>
+	<string>0.2</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Chrome</key>
@@ -48,6 +48,8 @@
 			</array>
 		</dict>
 	</dict>
+	<key>Description</key>
+	<string>Inject arbitrary JS into web pages</string>
 	<key>DeveloperIdentifier</key>
 	<string>57W7KG4A63</string>
 	<key>ExtensionInfoDictionaryVersion</key>
@@ -62,5 +64,7 @@
 			<string>All</string>
 		</dict>
 	</dict>
+	<key>Website</key>
+	<string>https://carlorapisarda.me</string>
 </dict>
 </plist>

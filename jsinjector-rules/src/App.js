@@ -38,6 +38,12 @@ class App extends Component {
         if (!util.isDevBuild()) {
             util.safari.self.addEventListener("message", this.getAnswer, false);
         }
+
+        const _this = this;
+        window.addEventListener("beforeunload", () => {
+            // If unsaved changes -> warn user before closing page
+            return (_this.rulesChanged ? "" : null);
+        });
     }
 
     setupRulesMonitor() {
@@ -46,6 +52,7 @@ class App extends Component {
                 const currentRules = this.rulesPanel.getRules();
                 const {savedRules} = this.state;
                 const changed = !(_.isEqual(currentRules, savedRules));
+                this.rulesChanged = changed;
                 this.rulesPanel.rulesChanged(changed);
             }
         }, 800);
